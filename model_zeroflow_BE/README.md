@@ -30,7 +30,6 @@ method of manufactured solutions test in 1D with ODEs, execute:
 ### Files ###
 
 * run_convergence_test_godunov.py
-
     Run convergence test with a CSD wave using Godenov splitting
 
     - Edit file to specify path for results (data) and figures.
@@ -40,7 +39,6 @@ method of manufactured solutions test in 1D with ODEs, execute:
         plots of neuronal potential (*.png).
 
 * run_convergence_test_strang.py
-
     Run convergence test with a CSD wave using Strang splitting
 
     - Edit file to specify path for results (data) and figures.
