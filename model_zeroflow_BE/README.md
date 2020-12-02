@@ -3,8 +3,7 @@
 This directory contains an implementation of a numerical scheme for solving the
 Mori model in the zero flow limit with two compartments (neurons and ECS) and
 Na, K, Cl. CSD is stimulated by excitatory fluxes. Numerical scheme: BE for
-time stepping, ESDIRK4 for ODE time stepping (can be altered in solve_BE.py)
-and a Godenov (solve_system_godenov() in solve_BE.py).
+time stepping, ESDIRK4 for ODE time stepping and a Godenov splitting scheme.
 
 ### Dependencies ###
 
