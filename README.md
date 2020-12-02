@@ -16,6 +16,10 @@ tissue". The sub-directories contain implementations of the different schemes:
     Contains implementation of a DG1/CG2 scheme with BDF2 PDE time stepping
     for the model in the zero flow limit
 
+* model_full_BE  
+    Contains implementation of a DG0/CG1 scheme with Backward Euler (BE) PDE time stepping
+    for the full model
+
 ### Dependencies and usage ###
 
 See individual README.md files in each sub-directory.
