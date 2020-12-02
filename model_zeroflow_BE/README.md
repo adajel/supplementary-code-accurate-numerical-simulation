@@ -34,7 +34,7 @@ method of manufactured solutions test in 1D with ODEs, execute:
 
     - Edit file to specify path for results (data) and figures.
 
-    - Generates table with values for wave speed (table_wavespeed.txt), width
+    - Output: generates table with values for wave speed (table_wavespeed.txt), width
         of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
         plots of neuronal potential (*.png).
 
@@ -43,18 +43,22 @@ method of manufactured solutions test in 1D with ODEs, execute:
 
     - Edit file to specify path for results (data) and figures.
 
-    - Generates table with values for wave speed (table_wavespeed.txt), width
+    - Output: generates table with values for wave speed (table_wavespeed.txt), width
         of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
         plots of neuronal potential (*.png).
 
-* *run_CSD_simulation.py*  
-    Run simulations of CSD
+* *run_CSD_simulation.py*
+    Run simulation of CSD
 
-* *run_mm_test_1D.py*  
-    Run method of manufactured solutions (MMS) test for the PDEs on a 1D mesh
-    with passive membrane mechanism (i.e. no ODEs)
+    - Output: generates time and space plots for the unknowns
 
-* *mms_1D.py*  
+* *run_mm_test_1D.py*
+    Run method of manufactured solutions (MMS) test with passive membrane
+    mechanism on a 1D mesh (i.e. no ODEs)
+
+    - Output: tables with errors (L2 and H1 when applicable) for the unknowns
+
+* *mms_1D.py*
     Contains MMS problem used in run_mm_test_1D.py.
 
 * *run_mm_test_1D_ODE.py*  
