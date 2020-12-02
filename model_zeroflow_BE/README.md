@@ -70,15 +70,15 @@ method of manufactured solutions test in 1D with ODEs, execute:
     solve_BE.py) and a Strang (solve_system_strange()) or Godenov
     splitting scheme (solve_system_godenov()).
 
-* *problem_base.py*\
+* *problem_base.py*  
     Contains class for problem base, specifying model parameters, initial
     conditions, membrane model (ODEs and/or algebraic expressions).
 
-* *problems.py*\
+* *problems.py*  
     Contains class for problems, specifying triggering mechanism (excitatory
     fluxes).
 
-* *plotter.py*\
+* *plotter.py*  
     Contains class for plotting.
 
 ### License ###
