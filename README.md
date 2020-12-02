@@ -4,6 +4,10 @@ Repository containing code for generating results presented in "Accurate
 numerical simulation of electrodiffusion and osmotic water movement in brain
 tissue". The sub-directories contain implementations of the different numerical schemes:
 
+* model_full_BE  
+    Contains implementation of a DG0/CG1 scheme with Backward Euler (BE) PDE time stepping
+    for the full model
+
 * model_zeroflow_BDF2  
     Contains implementation of a DG0/CG1 scheme with BDF2 PDE time stepping
     for the model in the zero flow limit
@@ -16,9 +20,9 @@ tissue". The sub-directories contain implementations of the different numerical 
     Contains implementation of a DG1/CG2 scheme with BDF2 PDE time stepping
     for the model in the zero flow limit
 
-* model_full_BE  
-    Contains implementation of a DG0/CG1 scheme with Backward Euler (BE) PDE time stepping
-    for the full model
+* model_zeroflow_CN
+    Contains implementation of a DG0/CG1 scheme with Cranck Nicholsen (CN) PDE time stepping
+    for the model in the zero flow limit
 
 ### Dependencies and usage ###
 
