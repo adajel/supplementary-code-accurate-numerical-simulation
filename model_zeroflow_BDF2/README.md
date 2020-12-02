@@ -4,7 +4,8 @@ This directory contains an implementation of a numerical scheme for solving the
 Mori model in the zero flow limit with two compartments (neurons and ECS) and
 Na, K, Cl. CSD is stimulated by excitatory fluxes. Numerical scheme: BDF2 for
 time stepping, ESDIRK4 for ODE time stepping (can be altered in solve_BDF2.py)
-and a Strang (solve_system_strange() in solve_BDF2.py).
+and a Strang (solve_system_strange() in solve_BDF2.py) or Godenov
+(solve_system_godenov() in solve_BDF2.py) splitting scheme.
 
 ### Dependencies ###
 
@@ -23,6 +24,8 @@ Note that plotting requires LaTex.
 
 Each numerical experiment can be run by the run_*.py files, i.e.:
 
+    python run_convergence_test_strang.py
+
     python run_convergence_test_godunov.py
 
     python run_MMS_test_1D.py
@@ -35,6 +38,14 @@ run_convergence_test_godunov.py in time and space, run:
     plot_CSD.py
 
 ### Files ###
+
+* *run_convergence_test_strang.py*  
+    Run convergence test with a CSD wave using Strang splitting
+
+    - Output: generates table with values for wave speed (table_wavespeed.txt), width
+        of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
+        plots of neuronal potential (*.png).
+
 
 * *run_convergence_test_godunov.py*  
     Run convergence test with a CSD wave using Godenov splitting
