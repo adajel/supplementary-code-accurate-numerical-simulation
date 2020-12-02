@@ -48,46 +48,37 @@ method of manufactured solutions test in 1D with ODEs, execute:
         plots of neuronal potential (*.png).
 
 * run_CSD_simulation.py
-
     Run simulations of CSD
 
 * run_mm_test_1D.py:
-
     Run method of manufactured solutions (MMS) test for the PDEs on a 1D mesh
     with passive membrane mechanism (i.e. no ODEs)
 
 * mms_1D.py:
-
     Contains MMS problem used in run_mm_test_1D.py.
 
 * run_mm_test_1D_ODE.py:
-
     Run method of manufactured solutions (MMS) test for coupled PDEs and ODEs
     on a 1D mesh.
 
 * mms_1D_ODE.py:
-
     Contains MMS problem used in run_mm_test_1D_ODE.py.
 
 * solver_BE.py:
-
     Contains class for a FEM solver for the mori model.  Numerical scheme: BE
     for time stepping, ESDIRK4 for ODE time stepping (can be altered in
     solve_BE.py) and a Strang (solve_system_strange()) or Godenov
     splitting scheme (solve_system_godenov()).
 
 * problem_base.py:
-
     Contains class for problem base, specifying model parameters, initial
     conditions, membrane model (ODEs and/or algebraic expressions).
 
 * problems.py:
-
     Contains class for problems, specifying triggering mechanism (excitatory
     fluxes).
 
 * plotter.py:
-
     Contains class for plotting.
 
 ### License ###
