@@ -22,8 +22,15 @@ Note that plotting requires LaTex.
 
 ### Usage ###
 
-Each numerical experiments can be run by the run_*.py files, i.e. to run the
-method of manufactured solutions test in 1D with ODEs, execute:
+Each numerical experiments can be run by the run_*.py files:
+
+    python run_convergence_test_godunov.py
+
+    python run_convergence_test_strang.py
+
+    python run_CSD_simulation.py
+
+    python run_MMM_test_1D.py
 
     python run_MMM_test_1D_ODE.py
 
@@ -58,12 +65,13 @@ method of manufactured solutions test in 1D with ODEs, execute:
 
     - Output: tables with errors (L2 and H1 when applicable) for the unknowns
 
-* *mms_1D.py*
-    Contains MMS problem used in run_mm_test_1D.py.
-
 * *run_mm_test_1D_ODE.py*  
     Run method of manufactured solutions (MMS) test for coupled PDEs and ODEs
     on a 1D mesh.
+
+* *mms_1D.py*
+    Contains MMS problem used in run_mm_test_1D.py.
+
 
 * *mms_1D_ODE.py*  
     Contains MMS problem used in run_mm_test_1D_ODE.py.
