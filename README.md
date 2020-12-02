@@ -2,7 +2,7 @@
 
 Repository containing code for generating results presented in "Accurate
 numerical simulation of electrodiffusion and osmotic water movement in brain
-tissue". The sub-directories contain implementations of the different schemes:
+tissue". The sub-directories contain implementations of the different numerical schemes:
 
 * model_zeroflow_BDF2  
     Contains implementation of a DG0/CG1 scheme with BDF2 PDE time stepping
