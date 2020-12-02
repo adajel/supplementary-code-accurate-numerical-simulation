@@ -25,8 +25,6 @@ Each numerical experiments can be run by the run_*.py files:
 
     python run_convergence_test_godunov.py
 
-    python run_convergence_test_strang.py
-
     python run_CSD_simulation.py
 
     python run_MMS_test_1D.py
@@ -37,15 +35,6 @@ Each numerical experiments can be run by the run_*.py files:
 
 * *run_convergence_test_godunov.py*  
     Run convergence test with a CSD wave using Godenov splitting
-
-    - Edit file to specify path for results (data) and figures.
-
-    - Output: generates table with values for wave speed (table_wavespeed.txt), width
-        of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
-        plots of neuronal potential (*.png).
-
-* *run_convergence_test_strang.py*  
-    Run convergence test with a CSD wave using Strang splitting
 
     - Edit file to specify path for results (data) and figures.
 
