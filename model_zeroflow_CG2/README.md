@@ -1,4 +1,4 @@
-# BDF2 time stepping scheme #
+# DG1/CG2 spatial scheme #
 
 This directory contains an implementation of a numerical DG1/CG2 scheme for
     solving the Mori model in the zero flow limit with two compartments
