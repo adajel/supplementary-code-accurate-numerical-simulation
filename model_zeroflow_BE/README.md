@@ -29,7 +29,7 @@ method of manufactured solutions test in 1D with ODEs, execute:
 
 ### Files ###
 
-* *run_convergence_test_godunov.py*\
+* *run_convergence_test_godunov.py*  
     Run convergence test with a CSD wave using Godenov splitting
 
     - Edit file to specify path for results (data) and figures.
@@ -38,7 +38,7 @@ method of manufactured solutions test in 1D with ODEs, execute:
         of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
         plots of neuronal potential (*.png).
 
-* *run_convergence_test_strang.py*\
+* *run_convergence_test_strang.py*  
     Run convergence test with a CSD wave using Strang splitting
 
     - Edit file to specify path for results (data) and figures.
@@ -47,24 +47,24 @@ method of manufactured solutions test in 1D with ODEs, execute:
         of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
         plots of neuronal potential (*.png).
 
-* *run_CSD_simulation.py*\
+* *run_CSD_simulation.py*  
     Run simulations of CSD
 
-* *run_mm_test_1D.py*\
+* *run_mm_test_1D.py*  
     Run method of manufactured solutions (MMS) test for the PDEs on a 1D mesh
     with passive membrane mechanism (i.e. no ODEs)
 
-* *mms_1D.py*\
+* *mms_1D.py*  
     Contains MMS problem used in run_mm_test_1D.py.
 
-* *run_mm_test_1D_ODE.py*\
+* *run_mm_test_1D_ODE.py*  
     Run method of manufactured solutions (MMS) test for coupled PDEs and ODEs
     on a 1D mesh.
 
-* *mms_1D_ODE.py*\
+* *mms_1D_ODE.py*  
     Contains MMS problem used in run_mm_test_1D_ODE.py.
 
-* *solver_BE.py*\
+* *solver_BE.py*  
     Contains class for a FEM solver for the mori model.  Numerical scheme: BE
     for time stepping, ESDIRK4 for ODE time stepping (can be altered in
     solve_BE.py) and a Strang (solve_system_strange()) or Godenov
