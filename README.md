@@ -20,7 +20,7 @@ tissue". The sub-directories contain implementations of the different numerical 
     Contains implementation of a DG1/CG2 scheme with BDF2 PDE time stepping
     for the model in the zero flow limit
 
-* model_zeroflow_CN
+* model_zeroflow_CN  
     Contains implementation of a DG0/CG1 scheme with Cranck Nicholsen (CN) PDE time stepping
     for the model in the zero flow limit
 
