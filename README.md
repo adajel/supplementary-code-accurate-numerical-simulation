@@ -1,8 +1,4 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
+# Supplementary code #
 
 Repository containing code for generating results presented in "Accurate
 numerical simulation of electrodiffusion and osmotic water movement in brain
@@ -20,7 +16,7 @@ tissue". The sub-directories contain implementations of the different schemes:
     Contains implementation of a DG0/CG1 scheme with Backward Euler (BE) PDE time stepping
     for the model in the zero flow limit
 
-### How do I get set up? ###
+### Dependencies and usage ###
 
 See individual README.md files in each sub-directory.
 
