@@ -30,9 +30,9 @@ Each numerical experiments can be run by the run_*.py files:
 
     python run_CSD_simulation.py
 
-    python run_MMM_test_1D.py
+    python run_MMS_test_1D.py
 
-    python run_MMM_test_1D_ODE.py
+    python run_MMS_test_1D_ODE.py
 
 ### Files ###
 
@@ -54,33 +54,32 @@ Each numerical experiments can be run by the run_*.py files:
         of wave (table_wavewidth.txt), duration of wave (table_duration.txt) and
         plots of neuronal potential (*.png).
 
-* *run_CSD_simulation.py*
+* *run_CSD_simulation.py*  
     Run simulation of CSD
 
     - Output: generates time and space plots for the unknowns
 
-* *run_mm_test_1D.py*
+* *run_mms_test_1D.py*  
     Run method of manufactured solutions (MMS) test with passive membrane
     mechanism on a 1D mesh (i.e. no ODEs)
 
     - Output: tables with errors (L2 and H1 when applicable) for the unknowns
 
-* *run_mm_test_1D_ODE.py*  
+* *run_mms_test_1D_ODE.py*  
     Run method of manufactured solutions (MMS) test for coupled PDEs and ODEs
     on a 1D mesh.
-
-* *mms_1D.py*
-    Contains MMS problem used in run_mm_test_1D.py.
-
-
-* *mms_1D_ODE.py*  
-    Contains MMS problem used in run_mm_test_1D_ODE.py.
 
 * *solver_BE.py*  
     Contains class for a FEM solver for the mori model.  Numerical scheme: BE
     for time stepping, ESDIRK4 for ODE time stepping (can be altered in
     solve_BE.py) and a Strang (solve_system_strange()) or Godenov
     splitting scheme (solve_system_godenov()).
+
+* *mms_1D.py*  
+    Contains MMS problem used in run_mms_test_1D.py.
+
+* *mms_1D_ODE.py*  
+    Contains MMS problem used in run_mms_test_1D_ODE.py.
 
 * *problem_base.py*  
     Contains class for problem base, specifying model parameters, initial
