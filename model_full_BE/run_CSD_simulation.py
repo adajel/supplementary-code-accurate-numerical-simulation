@@ -27,12 +27,14 @@ if __name__ == '__main__':
 
     # check that directory for results (data) exists, if not create
     path_data = 'results/data/CSD/'
+    """
     if not os.path.isdir(path_data):
         os.makedirs(path_data)
 
     # solve system
     S = Solver(problem, dt_value, Tstop)
     S.solve_system_godenov(path_results=path_data)
+    """
 
     # if directory for figures exists remove old, if not create
     path_figs = 'results/figures/CSD/'
@@ -42,6 +44,7 @@ if __name__ == '__main__':
     # create plotter object for visualizing results
     P = Plotter(problem, path_data)
 
+    """
     # initiate calculation of wave speed
     P.init_wavespeed()
 
@@ -53,4 +56,6 @@ if __name__ == '__main__':
     P.save_wavespeed(path_figs)
     # plot pressure and space plot
     P.plot_pressure(path_figs, Tstop)
-    P.make_spaceplot(path_figs, Tstop)
+    """
+    #P.make_spaceplot(path_figs, Tstop)
+    P.print_max_min(path_figs, Tstop)

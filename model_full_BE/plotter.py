@@ -11,6 +11,7 @@ from dolfin import *
 
 import string
 import os
+import re
 
 # set font & text parameters
 font = {'family' : 'serif',
@@ -20,6 +21,12 @@ font = {'family' : 'serif',
 plt.rc('font', **font)
 plt.rc('text', usetex=True)
 mpl.rcParams['image.cmap'] = 'jet'
+
+# define colors
+red = '#ed3e15'
+orange = '#fca106'
+green = '#97d51a'
+yellow = '#fdbf08'
 
 # set colors
 colormap = cm.viridis
@@ -37,19 +44,27 @@ c5 = colormap(normalize(mus[5]))
 
 class Plotter():
 
-    def __init__(self, problem, path_data):
+    def __init__(self, problem, path_data=None):
         self.problem = problem
         N_ions = self.problem.N_ions
         N_comparts = self.problem.N_comparts
         self.N_unknows = N_comparts*(2 + N_ions)
 
+        # initialize mesh and data file
+        if path_data is not None:
+            self.set_mesh_and_datafile(path_data)
+
+        return
+
+    def set_mesh_and_datafile(self, path_data):
         # file containing data
         self.h5_fname = path_data + 'results.h5'
 
-        # create mesh
+        # create mesh and read data file
         self.mesh = Mesh()
         hdf5 = HDF5File(MPI.comm_world, self.h5_fname, 'r')
         hdf5.read(self.mesh, '/mesh', False)
+        # convert coordinates from m to mm
         self.mesh.coordinates()[:] *= 1e3
 
         return
@@ -164,8 +179,8 @@ class Plotter():
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([0, 20, 40, 60, 80, 100, 120, 140])
-        plot(Na_N, color=c0, linewidth=lw)
-        plot(K_N, color=c1, linewidth=lw)
+        plot(Na_N, color=c0, linestyle='dashed', linewidth=lw)
+        plot(K_N, color=c1, linestyle='dotted', linewidth=lw)
         plot(Cl_N, color=c2, linewidth=lw)
 
         ax2 = fig.add_subplot(2,3,2, xlim=xlim, ylim=[0.0, 150])
@@ -173,26 +188,28 @@ class Plotter():
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([0, 20, 40, 60, 80, 100, 120, 140])
-        plot(Na_G, color=c0, linewidth=lw)
-        plot(K_G, color=c1, linewidth=lw)
+        plot(Na_G, color=c0, linestyle='dashed', linewidth=lw)
+        plot(K_G, color=c1, linestyle='dotted', linewidth=lw)
         plot(Cl_G, color=c2, linewidth=lw)
 
         ax3 = fig.add_subplot(2,3,3, xlim=xlim, ylim=[0.0, 150])
-        plt.ylabel(r'$[k]_R$ (mM)', fontsize=fosi)
+        plt.ylabel(r'$[k]_e$ (mM)', fontsize=fosi)
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([0, 20, 40, 60, 80, 100, 120, 140])
-        plot(Na_E, color=c0, label=r'Na$^+$', linewidth=lw)
-        plot(K_E, color=c1, label=r'K$^+$', linewidth=lw)
+        plot(Na_E, color=c0, label=r'Na$^+$', linestyle='dashed', linewidth=lw)
+        plot(K_E, color=c1, label=r'K$^+$', linestyle='dotted', linewidth=lw)
         plot(Cl_E, color=c2, label=r'Cl$^-$', linewidth=lw)
+
+        plt.figlegend(bbox_to_anchor=(1.0, 0.89))
 
         ax4 = fig.add_subplot(2,3,4, xlim=xlim, ylim=[-100, 20])
         plt.ylabel(r'$\phi$ (mV)', fontsize=fosi)
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-90, -70, -50, -30, -10, 10])
-        plot(phi_N, color=c3, linewidth=lw)
-        plot(phi_G, color=c4, linewidth=lw)
+        plot(phi_N, color=c3, linestyle='dashed', linewidth=lw)
+        plot(phi_G, color=c4, linestyle='dotted', linewidth=lw)
         plot(phi_E, color=c5, linewidth=lw)
 
         ax5 = fig.add_subplot(2,3,5, xlim=xlim, ylim=[-50, 20])
@@ -200,44 +217,20 @@ class Plotter():
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-40, -30, -20, -10, 0, 10])
-        plot(alpha_N_diff, color=c3, linewidth=lw)
-        plot(alpha_G_diff, color=c4, linewidth=lw)
+        plot(alpha_N_diff, color=c3, linestyle='dashed', linewidth=lw)
+        plot(alpha_G_diff, color=c4, linestyle='dotted', linewidth=lw)
         plot(alpha_E_diff, color=c5, linewidth=lw)
 
-        # TODO
         ax6 = fig.add_subplot(2,3,6, xlim=xlim, ylim=[-700, 700])
-        #plt.yticks([-600, -500, -400, -300, -200, -100, 0])
-        #ax6 = fig.add_subplot(2,3,6, xlim=xlim, ylim=[-25, 5])
-        #plt.yticks([-20, -15, -10, -5, 0])
         plt.ylabel(r'p (kPa)', fontsize=fosi)
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
-        plot(p_N, color=c3, label=r'neuron', linewidth=lw)
-        plot(p_G, color=c4, label=r'glial', linewidth=lw)
+        plot(p_N, color=c3, label=r'neuron', linestyle='dashed', linewidth=lw)
+        plot(p_G, color=c4, label=r'glial',  linestyle='dotted', linewidth=lw)
         plot(p_E, color=c5, label=r'ECS', linewidth=lw)
 
-        #ax7 = fig.add_subplot(3,3,7, xlim=xlim, ylim=[0, 400])
-        #plt.title(r'oncotic pressure')
-        #plt.ylabel(r'kPa')
-        #plt.xlabel(r'mm')
-        #plt.xticks([0, 2.5, 5, 7.5, 10])
-        #plt.yticks([50, 100, 150, 200, 250, 300, 350])
-        #plot(onc_N, color=c3, linewidth=lw)
-        #plot(onc_G, color=c4, linewidth=lw)
-        #plot(onc_E, color=c5, linewidth=lw)
-
-        #ax8 = fig.add_subplot(3,3,8, xlim=xlim, ylim=[-1000, 0])
-        #plt.title(r'modified pressure')
-        #plt.ylabel(r'kPa')
-        #plt.xlabel(r'mm')
-        #plt.xticks([0, 2.5, 5, 7.5, 10])
-        #plt.yticks([-800, -600, -400, -200])
-        #plot(p_N - onc_N, color=c3, label=r'neuron', linewidth=lw)
-        #plot(p_G - onc_G, color=c4, label=r'glial', linewidth=lw)
-        #plot(p_E - onc_E, color=c5, label=r'ECS', linewidth=lw)
-
         # make legend
-        plt.figlegend(bbox_to_anchor=(1.0, 0.89))
+        plt.figlegend(bbox_to_anchor=(1.0, 0.46))
 
         # make pretty
         ax.axis('off')
@@ -286,17 +279,17 @@ class Plotter():
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03])
-        plot(u_N, color=c3, label=r'neuron', linewidth=lw)
+        plot(u_N, color=c3, label=r'neuron', linestyle='dashed', linewidth=lw)
 
         ax2 = fig.add_subplot(1,3,2, xlim=xlim, ylim=[-0.5, 1.5])
         plt.ylabel(r'$u_g (\mu$m/s)', fontsize=fosi)
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-0.25, 0, 0.25, 0.5, 0.75, 1.0, 1.25])
-        plot(u_G, label=r'glial', color=c4, linewidth=lw)
+        plot(u_G, label=r'glial', color=c4, linestyle='dotted', linewidth=lw)
 
         ax3 = fig.add_subplot(1,3,3, xlim=xlim, ylim=[-0.05, 0.02])
-        plt.ylabel(r'$u_R (\mu$m/s)', fontsize=fosi)
+        plt.ylabel(r'$u_e (\mu$m/s)', fontsize=fosi)
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-0.04, -0.03, -0.02, -0.01, 0, 0.01])
@@ -320,6 +313,68 @@ class Plotter():
         # convert from svg to pdf
         os.system('inkscape -D -z --file=' + fname_res + '.svg --export-pdf=' \
                   + fname_res + '.pdf --export-latex')
+
+        return
+
+    def print_max_min(self, path_figs, n):
+        """ plot ECS concentrations, phi and % change volume fraction at t=n """
+
+        # calculate velocities
+        kappa = self.problem.params['kappa']
+        a = self.problem.params['a']
+        z = self.problem.params['z']
+        temperature = self.problem.params['temperature']
+        R = self.problem.params['R']
+        F = self.problem.params['F']
+
+        # get data
+        alpha_N = self.read_from_file(n, 0)
+        alpha_G = self.read_from_file(n, 1)
+        Na_N = self.read_from_file(n, 2)
+        Na_G = self.read_from_file(n, 3)
+        Na_E = self.read_from_file(n, 4)
+        K_N = self.read_from_file(n, 5)
+        K_G = self.read_from_file(n, 6)
+        K_E = self.read_from_file(n, 7)
+        Cl_N = self.read_from_file(n, 8)
+        Cl_G = self.read_from_file(n, 9)
+        Cl_E = self.read_from_file(n, 10)
+        phi_N = self.read_from_file(n, 11, scale=1.0e3)
+        phi_G = self.read_from_file(n, 12, scale=1.0e3)
+        phi_E = self.read_from_file(n, 13, scale=1.0e3)
+        p_E = self.read_from_file(n, 14, scale=1.0e-3)
+
+        # calculate extracellular volume fraction
+        u_alpha_E = 1.0 - alpha_N - alpha_G
+        alpha_E = self.project_to_function_space(u_alpha_E)
+
+        # get initial volume fractions
+        alpha_N_init = float(self.problem.alpha_N_init)
+        alpha_G_init = float(self.problem.alpha_G_init)
+        alpha_E_init = 1.0 - alpha_N_init - alpha_G_init
+
+        # calculate charge in volume fractions (alpha) in %
+        u_alpha_N_diff = (alpha_N - alpha_N_init)/alpha_N_init*100
+        u_alpha_G_diff = (alpha_G - alpha_G_init)/alpha_G_init*100
+        u_alpha_E_diff = (alpha_E - alpha_E_init)/alpha_E_init*100
+        alpha_N_diff = self.project_to_function_space(u_alpha_N_diff)
+        alpha_G_diff = self.project_to_function_space(u_alpha_G_diff)
+        alpha_E_diff = self.project_to_function_space(u_alpha_E_diff)
+
+        print("------------------------------------------------------")
+        print("phi_N max", max(phi_N.vector().get_local()))
+        print("phi_N min", min(phi_N.vector().get_local()))
+        print("phi_G max", max(phi_G.vector().get_local()))
+        print("phi_G min", min(phi_G.vector().get_local()))
+        print("phi_E max", max(phi_E.vector().get_local()))
+        print("phi_E min", min(phi_E.vector().get_local()))
+        print("------------------------------------------------------")
+        print("neuronal swell", max(alpha_N_diff.vector().get_local()))
+        print("glial swell", max(alpha_G_diff.vector().get_local()))
+        print("------------------------------------------------------")
+        print("K_E max", max(K_E.vector().get_local()))
+        print("K_E min", min(K_E.vector().get_local()))
+        print("------------------------------------------------------")
 
         return
 
@@ -525,10 +580,10 @@ class Plotter():
         Cl_N = self.read_from_file(n, 8)
         Cl_G = self.read_from_file(n, 9)
         Cl_E = self.read_from_file(n, 10)
-        phi_N = self.read_from_file(n, 11, scale=1.0e3)
-        phi_G = self.read_from_file(n, 12, scale=1.0e3)
-        phi_E = self.read_from_file(n, 13, scale=1.0e3)
-        p_E = self.read_from_file(n, 14, scale=1.0e-3)
+        phi_N = self.read_from_file(n, 11, scale=1.0e3) # convert from V to mV
+        phi_G = self.read_from_file(n, 12, scale=1.0e3) # convert from V to mV
+        phi_E = self.read_from_file(n, 13, scale=1.0e3) # convert from V to mV
+        p_E = self.read_from_file(n, 14, scale=1.0e-3)  # convert from Pa to kPa
 
         # calculate neuron and glial pressures
         S_M = self.problem.params['S_M']
@@ -562,9 +617,9 @@ class Plotter():
         osm_onc_G = self.project_to_function_space(u_osm_G + u_onc_G)
 
         # compartmental oncotic pressure
-        u_onc_NN = R*temperature*a[0]/alpha_N*1.0e-3
-        u_onc_GG = R*temperature*a[1]/alpha_G*1.0e-3
-        u_onc_EE = R*temperature*a[2]/alpha_E*1.0e-3
+        u_onc_NN = R*temperature*a[0]/alpha_N*1.0e-3 # convert from Pa to kPa
+        u_onc_GG = R*temperature*a[1]/alpha_G*1.0e-3 # convert from Pa to kPa
+        u_onc_EE = R*temperature*a[2]/alpha_E*1.0e-3 # convert from Pa to kPa
         onc_NN = self.project_to_function_space(u_onc_NN)
         onc_GG = self.project_to_function_space(u_onc_GG)
         onc_EE = self.project_to_function_space(u_onc_EE)
@@ -588,7 +643,7 @@ class Plotter():
 
         ax2 = fig.add_subplot(3,3,2, xlim=xlim)#, ylim=[-18.0, 12.0])
         plt.title(r'mechanical pressure neuron (kPa)')
-        plt.ylabel(r'$p_n$ (Pa)')
+        plt.ylabel(r'$p_n$ (kPa)')
         plt.xlabel(r'x (mm)')
         plt.xticks([0, 2.5, 5, 7.5, 10])
         #plt.yticks([-15, -10, -5, 0, 5, 10])
@@ -846,4 +901,259 @@ class Plotter():
             plt.savefig(fname)
             plt.close()
 
+        return speeds
+
+    def init_duration(self):
+        # duration (s)
+        self.duration = 0
         return
+
+    def get_duration(self, n):
+        """ save wave speed at given time n """
+        # ECS K
+        g = self.read_from_file(n, 7)
+        # evaluate g at x=1.0 mm
+        g_ = g(1.0)
+
+        # add one second to duration if wave is present (i.e K_E > 10 mM)
+        if g_ > 10:
+            self.duration += 1
+
+        return
+
+    def make_convergence_tables(self, params):
+        """ generate tables with wave characteristics during refinement in
+            space and time """
+
+        # get parameters
+        directory = params['directory']
+        Tstop = params['Tstop']
+        L = params['L']
+        N_values = params['N_values']
+        dt_values = params['dt_values']
+
+        # path for tables and plots
+        dir_res = directory + 'tables_and_figures/'
+        # check if directory exists, if not create
+        if not os.path.exists(dir_res):
+            os.makedirs(dir_res)
+
+        # create files for results
+        title_f4 = dir_res + "table_wavespeed.txt"
+        title_f5 = dir_res + "table_duration.txt"
+        title_f6 = dir_res + "table_wavewidth.txt"
+        title_f7 = dir_res + "table_pressurewidth.txt"
+
+        # open files
+        f4 = open(title_f4, 'w+')
+        f5 = open(title_f5, 'w+')
+        f6 = open(title_f6, 'w+')
+        f7 = open(title_f7, 'w+')
+
+        # write header to file
+        f4.write('$N \Delta t$')
+        f5.write('$N \Delta t$')
+        f6.write('$N \Delta t$')
+        f7.write('$N \Delta t$')
+
+        for dt in dt_values:
+            # write header to file (dt values)
+            f4.write('& %g ' % round((dt*1000),3))
+            f5.write('& %g ' % round((dt*1000),3))
+            f6.write('& %g ' % round((dt*1000),3))
+            f7.write('& %g ' % round((dt*1000),3))
+ 
+        # write header to file (diff)
+        f4.write('& $\Delta$')
+        f5.write('& $\Delta$')
+        f6.write('& $\Delta$')
+        f7.write('& $\Delta$')
+
+        # write newline to file
+        f4.write('\\\\')
+        f5.write('\\\\')
+        f6.write('\\\\')
+        f7.write('\\\\')
+
+        # write line to file
+        f4.write('\midrule ')
+        f5.write('\midrule ')
+        f6.write('\midrule ')
+        f7.write('\midrule ')
+
+        # lists for saving characteristics
+        L2_norm_Nlist =  []
+        dtdx_Nlist =  []
+        inf_norm_Nlist =  []
+        wave_speed_Nlist =  []
+        duration_Nlist =  []
+        wavewidth_Nlist =  []
+        pressurewidth_Nlist =  []
+
+        for i in range(len(N_values)):
+            # number of cells
+            N = N_values[i]
+
+            # write header to file (N, mesh resolution)
+            f4.write('%g &' % (N))
+            f5.write('%g &' % (N))
+            f6.write('%g &' % (N))
+            f7.write('%g &' % (N))
+
+            for j in range(len(dt_values)):
+
+                # set path to (data) and create mesh for current spatial resolution
+                self.set_mesh_and_datafile(directory + 'data_%d%d/' % (i,j))
+
+                # spatial and temporal resolution
+                dt = dt_values[j]
+                dx = self.mesh.hmin()
+
+                # frame number (at end time)
+                n = int(Tstop)
+
+                # get neuron potential
+                g = self.read_from_file(n, 11, scale=1.0e3)
+
+                # current time and space resolution (for naming results file)
+                dt_value = r'%.6f' % dt
+                dt_str = re.sub(r'[/.!$%^&*()]', '',  dt_value)
+
+                # get values of g
+                g_vec = g.compute_vertex_values()
+                # get max value (i.e. wave front)
+                index_max = max(range(len(g_vec)), key=g_vec.__getitem__)
+
+                # calculate width of wave (from ECS potassium concentration)
+                # read file
+                g_EK = self.read_from_file(n, 7)
+                # get values of g
+                g_vec_EK = g_EK.compute_vertex_values()
+                # get min and max x s.t. [k]_e > 10
+                fil_lst = [x*dx for x,y in enumerate(g_vec_EK) if y > 10]
+
+                wavewidth = max(fil_lst) - min(fil_lst)
+
+                # calculate width of wave (from ECS pressure)
+                # read file
+                g_PE = self.read_from_file(n, 14, scale=1.0e-3)
+                # get values of g
+                g_vec_PE = g_PE.compute_vertex_values()
+                # get min and max x s.t. P_e < -10
+                PE_fil_lst = [x*dx for x,y in enumerate(g_vec_PE) if y < -10]
+                pressurewidth = max(PE_fil_lst) - min(PE_fil_lst)
+
+                # generate plot ECS pressure
+                plt.figure()
+                plot(g_PE, linewidth=10.0)
+                # make plot pretty
+                plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+                plt.tick_params(axis='y', which='both', left=False, top=False, labelleft=False)
+                # save plot
+                plt.savefig(dir_res + 'pressure_N%d_' % N + 'dt' + dt_str + '.png')
+                plt.close()
+
+                # get wave speed
+                self.init_wavespeed()
+                self.init_duration()
+
+                # calculate wave speed
+                for k in range(n):
+                    self.get_wavespeed(k)
+                    self.get_duration(k)
+                speeds = self.save_wavespeed(dir_res)
+                # get mean wave speed and round to 3 decimals
+                wave_speed = round(np.mean(speeds[:]), 3)
+
+                # estimated wave speed
+                est = 5.1
+
+                # green - wave speed = +/- 5 % of estimated wave speed
+                g_low = est - est/100*5.0
+                g_upp = est + est/100*5.0
+
+                # orange - wave speed = +/- 10 % of estimated wave speed
+                o_low = est - est/100*15.0
+                o_upp = est + est/100*15.0
+
+                # generate plot neuronal potential
+                plt.figure()
+                # colour code plots
+                if (g_low <= wave_speed <= g_upp):
+                    plot(g, linewidth=10.0, color=green)
+                elif (o_low <= wave_speed <= o_upp):
+                    #plot(g, linewidth=10.0, color=orange)
+                    plot(g, linewidth=10.0, color=yellow)
+                else:
+                    plot(g, linewidth=10.0, color=red)
+                # make plot pretty
+                plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+                plt.tick_params(axis='y', which='both', left=False, top=False, labelleft=False)
+                # save plot
+                plt.savefig(dir_res + '_N%d_' % N + 'dt' + dt_str + '.png')
+                plt.close()
+
+                # write results to file
+                f4.write('%.3f &' % wave_speed)
+                f5.write('%.3f &' % self.duration)
+                f6.write('%.3f &' % wavewidth)
+                f7.write('%.3f &' % pressurewidth)
+
+                if i == (len(N_values) - 1):
+                    wave_speed_Nlist.append(wave_speed)
+                    duration_Nlist.append(self.duration)
+                    wavewidth_Nlist.append(wavewidth)
+                    pressurewidth_Nlist.append(pressurewidth)
+
+            if i > 0:
+                # write newline to file
+                f4.write('%.3f' % (wave_speed_prev - wave_speed))
+                f5.write('%.3f' % (duration_prev - self.duration))
+                f6.write('%.3f' % (wavewidth_prev - wavewidth))
+                f7.write('%.3f' % (pressurewidth_prev - pressurewidth))
+
+            # update previous values
+            wave_speed_prev =  wave_speed
+            duration_prev =  self.duration
+            wavewidth_prev =  wavewidth
+            pressurewidth_prev =  pressurewidth
+
+            # write newline to file
+            f4.write('\\\\')
+            f5.write('\\\\')
+            f6.write('\\\\')
+            f7.write('\\\\')
+
+        # write line to file
+        f4.write('\midrule ')
+        f5.write('\midrule ')
+        f6.write('\midrule ')
+        f7.write('\midrule ')
+
+        # write delta to file
+        f4.write('$\Delta$ & &')
+        f5.write('$\Delta$ & &')
+        f6.write('$\Delta$ & &')
+        f7.write('$\Delta$ & &')
+
+        for i in range(len(dt_values[:-1])):
+            # write delta to file
+            f4.write('%.3f &' % abs(wave_speed_Nlist[i] - wave_speed_Nlist[i+1]))
+            f5.write('%.3f &' % abs(duration_Nlist[i] - duration_Nlist[i+1]))
+            f6.write('%.3f &' % abs(wavewidth_Nlist[i] - wavewidth_Nlist[i+1]))
+            f7.write('%.3f &' % abs(pressurewidth_Nlist[i] - pressurewidth_Nlist[i+1]))
+
+        # write newline to file
+        f4.write('\\\\')
+        f5.write('\\\\')
+        f6.write('\\\\')
+        f7.write('\\\\')
+
+        # close files
+        f4.close()
+        f5.close()
+        f6.close()
+        f7.close()
+
+        return
+

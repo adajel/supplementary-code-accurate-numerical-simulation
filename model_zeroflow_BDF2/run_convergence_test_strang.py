@@ -69,8 +69,11 @@ if __name__ == '__main__':
 
     directory = "results/convergence_test/ESDIRK4_STRANG/"
 
-    dt_values = [1.25e-2, 6.25e-3, 3.125e-3, 1.5625e-3, 7.8125e-4, 3.90625e-4, 1.953125e-4]
-    N_values = [1000, 2000, 4000, 8000, 16000, 32000]
+    # TODO
+    #dt_values = [1.25e-2, 6.25e-3, 3.125e-3, 1.5625e-3, 7.8125e-4, 3.90625e-4, 1.953125e-4]
+    #N_values = [1000, 2000, 4000, 8000, 16000, 32000]
+    dt_values = [1.953125e-4]
+    N_values = [32000]
 
     Tstop = 50  # time stop (s)
     L = 0.01    # length of domain (m)

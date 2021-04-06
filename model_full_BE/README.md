@@ -31,8 +31,8 @@ Each numerical experiment can be run by the run_*.py files, i.e.:
 * *run_CSD_simulation.py*  
     Run convergence test with a CSD wave using Godenov splitting
 
-    - Output: generates plots of all state variables, fluid velocities and intracellular 
-        pressures.
+    - Output: plots of all state variables in time and space, fluid velocities
+        and intracellular pressures.
 
 * *run_mms_test_1D.py*  
     Run method of manufactured solutions (MMS) test with passive membrane
