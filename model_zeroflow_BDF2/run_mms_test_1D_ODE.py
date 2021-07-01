@@ -421,62 +421,6 @@ def space():
         ss_h_e = interpolate(ss_he, VE)         # gating extracellular
         ss_g_e = interpolate(ss_ge, VE)         # gating extracellular
 
-        """
-        fig = plt.figure(figsize=(10,5))
-        plt.subplot(1,3,1)
-        plot(ss_m_e, label="exact")
-        plot(ss_m, label="approx")
-        plt.ylim([-1.1,1.1])
-        plt.legend()
-        plt.title("m")
-
-        plt.subplot(1,3,2)
-        plot(ss_h_e, label="exact")
-        plot(ss_h, label="approx")
-        plt.ylim([-1.1,1.1])
-        plt.legend()
-        plt.title("h")
-
-        plt.subplot(1,3,3)
-        plot(ss_g_e, label="exact")
-        plot(ss_g, label="approx")
-        plt.ylim([-1.1,1.1])
-        plt.legend()
-        plt.title("g")
-
-        plt.savefig("gating_%d" % resolution + ".png")
-        plt.close()
-
-        plt.figure()
-        plot(Na_E_e - Na_E, label="diff")
-        #plot(Na_E_e, label="exact")
-        #plot(Na_E, label="approx")
-        plt.ylim([-2.0e-3,2.0e-3])
-        plt.legend()
-        plt.savefig(directory + "/Na_E%d.png" % N)
-        plt.close()
-
-        plt.figure()
-        plot(K_E_e - K_E, label="diff")
-        #plot(K_E_e, label="exact")
-        #plot(K_E, label="approx")
-        #plt.ylim([-2.0,2.0])
-        plt.ylim([-2.0e-3,2.0e-3])
-        plt.legend()
-        plt.savefig(directory + "/K_N%d.png" % N)
-        plt.close()
-
-        plt.figure()
-        plot(Na_N_e - Na_E, label="diff")
-        #plot(Na_N_e, label="exact")
-        #plot(Na_N, label="approx")
-        #plt.ylim([-2.0,2.0])
-        plt.ylim([-2.0e-3,2.0e-3])
-        plt.legend()
-        plt.savefig(directory + "/Na_N%d.png" % N)
-        plt.close()
-        """
-
         # get error L2
         alphaN_L2 = errornorm(alpha_N_e, alpha_N, "L2", degree_rise=2)
         NaN_L2 = errornorm(Na_N_e, Na_N, "L2", degree_rise=2)
@@ -734,62 +678,6 @@ def time():
         ss_m_e = interpolate(ss_me, VE)         # gating extracellular
         ss_h_e = interpolate(ss_he, VE)         # gating extracellular
         ss_g_e = interpolate(ss_ge, VE)         # gating extracellular
-
-        """
-        fig = plt.figure(figsize=(10,5))
-        plt.subplot(1,3,1)
-        plot(ss_m_e, label="exact")
-        plot(ss_m, label="approx")
-        plt.ylim([-1.1,1.1])
-        plt.legend()
-        plt.title("m")
-
-        plt.subplot(1,3,2)
-        plot(ss_h_e, label="exact")
-        plot(ss_h, label="approx")
-        plt.ylim([-1.1,1.1])
-        plt.legend()
-        plt.title("h")
-
-        plt.subplot(1,3,3)
-        plot(ss_g_e, label="exact")
-        plot(ss_g, label="approx")
-        plt.ylim([-1.1,1.1])
-        plt.legend()
-        plt.title("g")
-
-        #plt.savefig("gating.png" + ".png")
-        #plt.close()
-
-        plt.figure()
-        plot(Na_E_e - Na_E, label="diff")
-        #plot(Na_E_e, label="exact")
-        #plot(Na_E, label="approx")
-        plt.ylim([-2.0e-3,2.0e-3])
-        plt.legend()
-        plt.savefig(directory + "/Na_E%d.png" % N)
-        plt.close()
-
-        plt.figure()
-        plot(K_E_e - K_E, label="diff")
-        #plot(K_E_e, label="exact")
-        #plot(K_E, label="approx")
-        #plt.ylim([-2.0,2.0])
-        plt.ylim([-2.0e-3,2.0e-3])
-        plt.legend()
-        plt.savefig(directory + "/K_N%d.png" % N)
-        plt.close()
-
-        plt.figure()
-        plot(Na_N_e - Na_E, label="diff")
-        #plot(Na_N_e, label="exact")
-        #plot(Na_N, label="approx")
-        #plt.ylim([-2.0,2.0])
-        plt.ylim([-2.0e-3,2.0e-3])
-        plt.legend()
-        plt.savefig(directory + "/Na_N%d.png" % N)
-        plt.close()
-        """
 
         # get error L2
         alphaN_L2 = errornorm(alpha_N_e, alpha_N, "L2", degree_rise=2)

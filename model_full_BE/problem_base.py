@@ -45,8 +45,6 @@ class ProblemBase():
         C_GE = Constant(0.75e-2)       # capacitance - glial  (F/m^2)
         C_M = [C_NE, C_GE]
 
-        #S_NE = Constant(0.0)          # membrane stiffness - neuron (Pa/m^3)
-        #S_GE = Constant(0.0)          # membrane stiffness - glial  (Pa/m^3)
         S_NE = Constant(2.85e3)        # membrane stiffness - neuron (Pa/m^3)
         S_GE = Constant(2.85e3)        # membrane stiffness - glial  (Pa/m^3)
         S_M = [S_NE, S_GE]
@@ -64,23 +62,12 @@ class ProblemBase():
         z = [z_Na, z_K, z_Cl, z_0]
 
         xie_N = Constant(0.0)          # scaling factor effective diffusion neuron
-        xie_G = Constant(0.0)          # scaling factor effective diffusion glial
+        xie_G = Constant(0.05)         # scaling factor effective diffusion glial
         xie = [xie_N, xie_G]
 
         kappa_N = Constant(0.0)         # hydraulic permeability neuron - (m^4/(N s))
         kappa_G = Constant(5.0e-16)     # hydraulic permeability glial  - (m^4/(N s))
         kappa_E = Constant(5.0e-16)     # hydraulic permeability ECS    - (m^4/(N s))
-
-        #kappa_N = Constant(0.0)         # hydraulic permeability neuron - (m^4/(N s))
-        #kappa_G = Constant(5.0e-12)    # hydraulic permeability glial  - (m^4/(N s))
-        #kappa_E = Constant(5.0e-12)    # hydraulic permeability ECS    - (m^4/(N s))
-
-        #kappa_N = Constant(5.0e-12)    # hydraulic permeability neuron - (m^4/(N s))
-        #kappa_G = Constant(5.0e-12)    # hydraulic permeability glial  - (m^4/(N s))
-        #kappa_E = Constant(5.0e-12)    # hydraulic permeability ECS    - (m^4/(N s))
-        #kappa_N = Constant(5.0e-18)     # hydraulic permeability neuron - (m^4/(N s))
-        #kappa_G = Constant(5.0e-18)     # hydraulic permeability glial  - (m^4/(N s))
-        #kappa_E = Constant(5.0e-18)     # hydraulic permeability ECS    - (m^4/(N s))
 
         kappa = [kappa_N, kappa_G, kappa_E]
 

@@ -122,10 +122,10 @@ class Plotter():
         Cl_N = self.read_from_file(n, 8)
         Cl_G = self.read_from_file(n, 9)
         Cl_E = self.read_from_file(n, 10)
-        phi_N = self.read_from_file(n, 11, scale=1.0e3)
-        phi_G = self.read_from_file(n, 12, scale=1.0e3)
-        phi_E = self.read_from_file(n, 13, scale=1.0e3)
-        p_E = self.read_from_file(n, 14, scale=1.0e-3)
+        phi_N = self.read_from_file(n, 11)
+        phi_G = self.read_from_file(n, 12)
+        phi_E = self.read_from_file(n, 13)
+        p_E = self.read_from_file(n, 14)
 
         # calculate extracellular volume fraction
         u_alpha_E = 1.0 - alpha_N - alpha_G
@@ -162,7 +162,6 @@ class Plotter():
         tau_G = S_M[1]*(alpha_G - alpha_init[1])
         p_N = self.project_to_function_space(p_E + tau_N)
         p_G = self.project_to_function_space(p_E + tau_G)
-
 
         # plotting parameters
         xlim = [0.0, 10.0] # range of x values
@@ -208,9 +207,9 @@ class Plotter():
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-90, -70, -50, -30, -10, 10])
-        plot(phi_N, color=c3, linestyle='dashed', linewidth=lw)
-        plot(phi_G, color=c4, linestyle='dotted', linewidth=lw)
-        plot(phi_E, color=c5, linewidth=lw)
+        plot(phi_N*1.0e3, color=c3, linestyle='dashed', linewidth=lw)
+        plot(phi_G*1.0e3, color=c4, linestyle='dotted', linewidth=lw)
+        plot(phi_E*1.0e3, color=c5, linewidth=lw)
 
         ax5 = fig.add_subplot(2,3,5, xlim=xlim, ylim=[-50, 20])
         plt.ylabel(r'$\Delta \alpha (\%)$', fontsize=fosi)
@@ -225,9 +224,9 @@ class Plotter():
         plt.ylabel(r'p (kPa)', fontsize=fosi)
         plt.xlabel(r'x (mm)', fontsize=fosi)
         plt.xticks([0, 2.5, 5, 7.5, 10])
-        plot(p_N, color=c3, label=r'neuron', linestyle='dashed', linewidth=lw)
-        plot(p_G, color=c4, label=r'glial',  linestyle='dotted', linewidth=lw)
-        plot(p_E, color=c5, label=r'ECS', linewidth=lw)
+        plot(p_N*1.0e-3, color=c3, label=r'neuron', linestyle='dashed', linewidth=lw)
+        plot(p_G*1.0e-3, color=c4, label=r'glial',  linestyle='dotted', linewidth=lw)
+        plot(p_E*1.0e-3, color=c5, label=r'ECS', linewidth=lw)
 
         # make legend
         plt.figlegend(bbox_to_anchor=(1.0, 0.46))
@@ -393,9 +392,9 @@ class Plotter():
         Cl_N = self.read_from_file(n, 8)
         Cl_G = self.read_from_file(n, 9)
         Cl_E = self.read_from_file(n, 10)
-        phi_N = self.read_from_file(n, 11, scale=1.0e3)
-        phi_G = self.read_from_file(n, 12, scale=1.0e3)
-        phi_E = self.read_from_file(n, 13, scale=1.0e3)
+        phi_N = self.read_from_file(n, 11)
+        phi_G = self.read_from_file(n, 12)
+        phi_E = self.read_from_file(n, 13)
         p_E = self.read_from_file(n, 14)
 
 
@@ -463,9 +462,9 @@ class Plotter():
         plt.xlabel(r'mm')
         plt.xticks([0, 2.5, 5, 7.5, 10])
         plt.yticks([-90, -70, -50, -30, -10, 10])
-        plot(phi_N, linewidth=lw)
-        plot(phi_G, linewidth=lw)
-        plot(phi_E, linewidth=lw)
+        plot(phi_N*1.0e3, linewidth=lw)
+        plot(phi_G*1.0e3, linewidth=lw)
+        plot(phi_E*1.0e3, linewidth=lw)
 
         ax5 = fig.add_subplot(3,3,5, xlim=xlim, ylim=[-50, 20])
         plt.title(r'\% change volume fractions')
@@ -580,10 +579,10 @@ class Plotter():
         Cl_N = self.read_from_file(n, 8)
         Cl_G = self.read_from_file(n, 9)
         Cl_E = self.read_from_file(n, 10)
-        phi_N = self.read_from_file(n, 11, scale=1.0e3) # convert from V to mV
-        phi_G = self.read_from_file(n, 12, scale=1.0e3) # convert from V to mV
-        phi_E = self.read_from_file(n, 13, scale=1.0e3) # convert from V to mV
-        p_E = self.read_from_file(n, 14, scale=1.0e-3)  # convert from Pa to kPa
+        phi_N = self.read_from_file(n, 11) # convert from V to mV
+        phi_G = self.read_from_file(n, 12) # convert from V to mV
+        phi_E = self.read_from_file(n, 13) # convert from V to mV
+        p_E = self.read_from_file(n, 14)   # convert from Pa to kPa
 
         # calculate neuron and glial pressures
         S_M = self.problem.params['S_M']
@@ -671,7 +670,7 @@ class Plotter():
         plt.xlabel(r'x (mm)')
         plt.xticks([0, 2.5, 5, 7.5, 10])
         #plt.yticks([-15, -10, -5, 0, 5, 10])
-        plot(p_G, color=c3, linestyle='dashed', linewidth=lw)
+        plot(p_G*1.0e-3, color=c3, linestyle='dashed', linewidth=lw)
 
         ax6 = fig.add_subplot(3,3,6, xlim=xlim, ylim=[-1000, 0])
         plt.title(r'modified pressure glial (kPa)')
@@ -695,11 +694,11 @@ class Plotter():
         plt.xlabel(r'x (mm)')
         plt.xticks([0, 2.5, 5, 7.5, 10])
         #plt.yticks([-15, -10, -5, 0, 5, 10])
-        plot(p_E, color=c3, linestyle='dashed', linewidth=lw)
+        plot(p_E*1.0e-3, color=c3, linestyle='dashed', linewidth=lw)
 
         ax9 = fig.add_subplot(3,3,9, xlim=xlim, ylim=[-1000, 0])
         plt.title(r'modified pressure ECS (kPa)')
-        plot(p_E - onc_EE, color=c4, linestyle='dashed', linewidth=lw)
+        plot(p_E*1.0e-3 - onc_EE, color=c4, linestyle='dashed', linewidth=lw)
         plt.ylabel(r'$\tilde{p}_n$ (mM)')
         plt.xlabel(r'x (mm)')
         plt.xticks([0, 2.5, 5, 7.5, 10])
@@ -1157,3 +1156,117 @@ class Plotter():
 
         return
 
+    def plot_fluid_velocities_mori(self, path_figs, n):
+        """ plot fluid velocities at t=n """
+
+        # get data
+        alpha_N = self.read_from_file(n, 0)
+        alpha_G = self.read_from_file(n, 1)
+        Na_G = self.read_from_file(n, 3)
+        Na_E = self.read_from_file(n, 4)
+        K_G = self.read_from_file(n, 6)
+        K_E = self.read_from_file(n, 7)
+        Cl_G = self.read_from_file(n, 9)
+        Cl_E = self.read_from_file(n, 10)
+        phi_G = self.read_from_file(n, 12)
+        phi_E = self.read_from_file(n, 13)
+        p_E = self.read_from_file(n, 14)
+
+        # get parameters
+        S_M = self.problem.params['S_M']
+        alpha_init = self.problem.params['alpha_init']
+        R = self.problem.params['R']
+        F = self.problem.params['F']
+        temperature = self.problem.params['temperature']
+        a = self.problem.params['a']             # immobile ions
+        z = self.problem.params['z']             # valence
+        kappa = self.problem.params['kappa']     # hydraulic permeability (compartmental)
+        gamma_M = self.problem.params['gamma_M'] # membrane area per unit volume
+        nw_M = self.problem.params['nw_M']       # hydraulic permeability (membrane)
+
+        # calculate neuron and glial mechanical pressures
+        tau_N = S_M[0]*(alpha_N - alpha_init[0])
+        tau_G = S_M[1]*(alpha_G - alpha_init[1])
+        p_N = self.project_to_function_space(p_E + tau_N)
+        p_G = self.project_to_function_space(p_E + tau_G)
+
+        # calculate extracellular volume fraction
+        u_alpha_E = 1.0 - alpha_N - alpha_G
+        alpha_E = self.project_to_function_space(u_alpha_E)
+
+        # contribution to glial compartmental fluid flow from oncotic pressure
+        u_G_onc_ = - kappa[1]*grad(- R*temperature*a[1]/alpha_G)
+        u_G_onc = project(u_G_onc_[0]*1.0e9)
+        # contribution to glial fluid flow from mechanical pressure
+        u_G_mec_ = - kappa[1]*grad(p_G)
+        u_G_mec = project(u_G_mec_[0]*1.0e9)
+        # contribution to glial fluid flow from electrostatic forces
+        u_G_esf_ = - kappa[1]*F*grad(phi_G)*(z[0]*Na_G + z[1]*K_G + z[2]*Cl_G)
+        u_G_esf = project(u_G_esf_[0]*1.0e9)
+        # total glial compartmental fluid flow
+        u_G_tot = u_G_onc + u_G_mec + u_G_esf
+
+        # contribution to ECS compartmental fluid flow from oncotic pressure
+        u_E_onc_ = - kappa[2]*grad(- R*temperature*a[2]/alpha_E)
+        u_E_onc = project(u_E_onc_[0]*1.0e9)
+        # contribution to ECS fluid flow from mechanical pressure
+        u_E_mec_ = - kappa[2]*grad(p_E)
+        u_E_mec = project(u_E_mec_[0]*1.0e9)
+        # contribution to ECS fluid flow from electrostatic forces
+        u_E_esf_ = - kappa[2]*F*grad(phi_E)*(z[0]*Na_E + z[1]*K_E + z[2]*Cl_E)
+        u_E_esf = project(u_E_esf_[0]*1.0e9)
+        # total ECS compartmental fluid flow
+        u_E_tot = u_E_onc + u_E_mec + u_E_esf
+
+        # plotting parameters
+        xlim = [0.0, 10.0]   # range of x values
+        lw = 3.0             # line width
+
+        # create plot
+        fig = plt.figure(figsize=(8, 5))
+        ax = plt.gca()
+
+        ax1 = fig.add_subplot(1,2,1, xlim=xlim, ylim=[-0.5, 1.1])
+        plt.title(r'Glia')
+        plt.ylabel(r'$u$ (nm/s)', )
+        plt.xlabel(r'x (mm)')
+        plt.xticks([0, 2.5, 5, 7.5, 10])
+        plt.yticks([-0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        plot(u_G_onc, color=c5, linewidth=lw)
+        plot(u_G_mec, color=c3, linewidth=lw)
+        plot(u_G_esf, color=c4, linewidth=lw)
+        plot(u_G_tot, color=c1, linewidth=lw, linestyle='dashed')
+
+        ax2 = fig.add_subplot(1,2,2, xlim=xlim, ylim=[-0.5, 1.1])
+        plt.title(r'ECS')
+        plt.ylabel(r'$u$ (nm/s)')
+        plt.xlabel(r'x (mm)')
+        plt.xticks([0, 2.5, 5, 7.5, 10])
+        plt.yticks([-0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        plot(u_E_onc, color=c5, linewidth=lw, label='oncotic')
+        plot(u_E_mec, color=c3, linewidth=lw, label='mechanical')
+        plot(u_E_esf, color=c4, linewidth=lw, label='electrostatic')
+        plot(u_E_tot, color=c1, linewidth=lw, label='total', linestyle='dashed')
+
+        plt.figlegend(bbox_to_anchor=(0.99, 0.87))
+
+        # make pretty
+        ax.axis('off')
+        plt.subplots_adjust(wspace=0.38, hspace=0.1, right=1.0)
+
+        # add numbering for the subplots (A, B, C etc)
+        letters = [r'\textbf{A}', r'\textbf{B}']
+
+        for num, ax in enumerate([ax1, ax2]):
+            ax.text(-0.12, 1.06, letters[num], transform=ax.transAxes)
+
+        # save figure to file
+        fname_res = path_figs + 'velocities_mori_n%d' % n
+        plt.savefig(fname_res + '.svg', format='svg')
+        plt.close()
+
+        # convert from svg to pdf
+        os.system('inkscape -D -z --file=' + fname_res + '.svg --export-pdf=' \
+                  + fname_res + '.pdf --export-latex')
+
+        return

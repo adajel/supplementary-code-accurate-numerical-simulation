@@ -115,10 +115,13 @@ class Plotter():
 
     def get_duration(self, n):
         """ save wave speed at given time n """
-        #g = self.read_from_file(n, 7, scale=1.0e3)
         g = self.read_from_file(n, 4)
         # evaluate g at x=1.0 mm
         g_ = g(1.0)
+        # evaluate g at x=3.0 mm
+        #g_ = g(3.0)
+        # evaluate g at x=5.0 mm
+        #g_ = g(5.0)
 
         # add one second to duration if wave is present (i.e K_E > 10 mM)
         if g_ > 10:
@@ -302,7 +305,7 @@ class Plotter():
 
         # create files for results
         title_f4 = dir_res + "table_wavespeed.txt"
-        title_f5 = dir_res + "table_duration.txt"
+        title_f5 = dir_res + "table_duration_x1mm.txt"
         title_f6 = dir_res + "table_wavewidth.txt"
 
         # open files
