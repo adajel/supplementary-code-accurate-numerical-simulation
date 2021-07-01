@@ -186,10 +186,6 @@ def space_time():
             fsum_H1.write('%g & %.2E(-----) & %.2E(-----) & %.2E(-----) & %.2E(-----)\\\\' % (N, \
                             NaE_H1, phiN_H1, alphaN_H1, pE_H1))
 
-            # TODO
-            # write to file - summary
-            #fsum_H1.write('%g & %.2E(-----) & %.2E(-----)\\\\' % (N, NaE_H1, phiN_H1))
-
         if i > 0:
             # L2 errors
             r_alphaN_L2 = np.log(alphaN_L2/alphaN_L2_0)/np.log(h/h0)
@@ -278,12 +274,6 @@ def space_time():
                             phiN_H1, r_phiN_H1, \
                             alphaN_H1, r_alphaN_H1, \
                             pE_H1, r_pE_H1))
-
-            # TODO
-            # write to file - summary
-            #fsum_H1.write('%g & %.2E(%.2f) & %.2E(%.2f)\\\\' % (N, \
-                            #NaE_H1, r_NaE_H1, \
-                            #phiN_H1, r_phiN_H1))
 
         # update prev h
         h0 = h
